@@ -1,22 +1,22 @@
 //use class to write each algorithm just 'cuz notepad++
-//class and function could be easily found. 
+//class and function could be easily found.
 /**************************************************
 *******************简单算法与STL*******************
     STL
     输入输出外挂
     大数处理
     大数加法，减法，乘法, 比较, JAtoA
-    
+
 *************************DP************************
-    
+
 ************************搜索***********************
-    
+
 **********************数据结构*********************
     并查集 Disjoint_Set
     线段树 Segment_Tree
-    
+
 ***********************字符串**********************
-    
+
 ************************图论***********************
     链式前向星 Link_Pre_Star
     拓扑序 Topological_Order
@@ -28,7 +28,7 @@
         堆优化Dij priority_dijkstra
         SPFA SPFA
         Floyd Floyd
-        
+
 ************************数论***********************
     快速幂运算 Fast_Pow
     欧拉素数筛 Celect_Prime
@@ -182,7 +182,7 @@ class STL {
     ///set,红黑树的平衡二叉检索树建立，用于快速检索
     #include<set>
     struct cmp {
-        bool operator()( const int &a, const int &b ) const{   
+        bool operator()( const int &a, const int &b ) const{
             return a>b;
         }//降序
     };
@@ -299,7 +299,7 @@ class Disjoint_Set {
         return ;
     }
     void init(int n) {
-        for (int i = 0; i <= n; ++i) 
+        for (int i = 0; i <= n; ++i)
             pre[i] = i;
         return ;
     }
@@ -334,18 +334,18 @@ class Segment_Tree {
         Built(&tree[1]);
     }
     long long search(RMQ* now, unsigned int l, unsigned int r) {
-        if(now->l == now->r) 
+        if(now->l == now->r)
             return 0;
-        if (l == now->l && r == now->r) 
+        if (l == now->l && r == now->r)
             return (now->sum + now->lazy * (r-l));
         now->sum += (now->lazy * (now->r - now->l));
         tree[now->nxl].lazy += now->lazy, tree[now->nxr].lazy += now->lazy;
         now->lazy = 0;
         if (l >= tree[now->nxl].r)
             return search(&tree[now->nxr], l, r);
-        if (r <= tree[now->nxr].l) 
-            return search(&tree[now->nxl], l, r); 
-        return (search(&tree[now->nxl], l, tree[now->nxl].r) + 
+        if (r <= tree[now->nxr].l)
+            return search(&tree[now->nxl], l, r);
+        return (search(&tree[now->nxl], l, tree[now->nxl].r) +
                 search(&tree[now->nxr], tree[now->nxr].l, r));
     }
     long long add(RMQ* now, unsigned int l, unsigned int r, long long lazy) {
@@ -362,7 +362,7 @@ class Segment_Tree {
             return add(&tree[now->nxl], l, r, lazy);
         if (l >= tree[now->nxr].l)
             return add(&tree[now->nxr], l, r, lazy);
-        return (add(&tree[now->nxl], l, tree[now->nxl].r, lazy) + 
+        return (add(&tree[now->nxl], l, tree[now->nxl].r, lazy) +
                 add(&tree[now->nxr], tree[now->nxr].l, r, lazy));
 
     }
@@ -637,6 +637,81 @@ class Floyd {
 //边双连通分量
 //点双连通分量
 /****最近公共祖先(LCA)****/
+class LCA {
+    struct Edge {
+    	int to, nxt, w;
+    }edge[MAX << 1];
+    bool used[MAX];
+    int T, n, m, tot, t, u, v, w, to;
+    int head[MAX], ind[MAX], f[MAX][20], deep[MAX];
+    long long dis[MAX];
+    queue <int> que;
+    void addedge(int from, int to, int w = 0) {
+    	edge[tot].to = to, edge[tot].w = w;
+    	edge[tot].nxt = head[from], head[from] = tot++;
+    }
+    void init() {
+    	tot=  0;
+    	memset (head, -1, sizeof (head));
+    	memset (dis, 0, sizeof (dis));
+    	memset (deep, 0, sizeof (deep));
+    	memset (used, 0, sizeof (used));
+    //	memset (ind, 0, sizeof (ind));
+    }
+    void bfs(int h) {
+    	int now;
+    	while (que.size()) que.pop();
+    	que.push(h), used[h] = 1;
+    	deep[h] = 0, dis[h] = 0;
+    	while (que.size()) {
+    		now = que.front(), que.pop();
+    		used[now] = 1;
+    		for (int i = head[now]; i != -1; i = edge[i].nxt) {
+    			to = edge[i].to;
+    			if (used[to]) continue;
+    			dis[to] = dis[now] + edge[i].w;
+    			deep[to] = deep[now] + 1;
+    			f[to][0] = now;
+    			for (int j = 1; j <= t; ++j)
+    				f[to][j] = f[f[to][j-1]][j-1];
+    			que.push(to), used[to] = 1;
+    		}
+    	}
+    	return ;
+    }
+    int lca(int x, int  y) {
+    	if (deep[x] > deep[y]) swap(x, y);
+    	for (int i = t; i >= 0; --i)
+    		if (deep[f[y][i]] >= deep[x])
+    			y = f[y][i];
+    	if (x == y) return x;
+    	for (int i = t; i >= 0; --i)
+    		if (f[x][i] != f[y][i])
+    			x = f[x][i], y = f[y][i];
+    	return f[x][0];
+    }
+    void getin() {
+    	cin >> n >> m;//n points, m queries
+    	init();
+    	t = (int) (log(n) / log(2)) + 1;
+
+    	for (int i = 0; i < n-1; ++i) {
+    		cin >> u >> v >> w;
+    		addedge(u, v , w), addedge(v, u, w);
+    		//++ind[v]; //Directed graph
+    	}
+    	/** Directed graph
+    	for (int i = 1; i <= n; ++i) {
+    		if (ind[i] == 0) {
+    			bfs(i);
+    			break;
+    		}
+    	}
+    	**/
+    	bfs(1);
+    	return ;
+    }
+}
 //tarjan
 //ST-RMQ在线算法
 /************************数论***********************/
@@ -646,7 +721,7 @@ class Floyd {
 //扩展欧几里德算法
 //快速幂运算
 class Fast_Pow {
-    long long fastpow(long long a, long long b, int mod) {  
+    long long fastpow(long long a, long long b, int mod) {
         long long res=1;
         a %= mod;
         for ( ; b; b >>= 1) {
@@ -654,7 +729,7 @@ class Fast_Pow {
                 (res *= a) %= mod;
             (a *= a) %= mod;
         }
-        return res;  
+        return res;
     }
 }
 /****质数判断****/
