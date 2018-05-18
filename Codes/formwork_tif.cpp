@@ -27,7 +27,7 @@
         Dij dijkstra
         堆优化Dij priority_dijkstra
         SPFA SPFA
-        Floyd Floyd
+        Floyd + 最小环 Floyd
 
 ************************数论***********************
     快速幂运算 Fast_Pow
@@ -289,13 +289,10 @@ class STL {
 class Disjoint_Set {
     int pre[MAXN];
     int find(int now) {
-        if (pre[now] == now) return now;
-        return pre[now] = find(pre[now]);
+        return pre[now] == now ? now : (pre[now] = find(pre[now]));
     }
     void Union(int a, int b) {
-        int fa = find(a), fb = find(b);
-        if (fa != fb)
-            pre[fb] = fa;
+        pre[find(a)] = find(b);
         return ;
     }
     void init(int n) {
@@ -607,16 +604,17 @@ class SPFA { //judge Negative Ring
         return dis[ed];
     }
 }
-//Floyd 全图最短路
+//Floyd 全图最短路 + 最小环
 class Floyd {
     int d[MAX_N][MAX_N];
     void Floyd() {
         for (int k = 1; k <= n; ++k) {
-            for (int i = 1; i <= n; ++i) {
-                for (int j = 1; j <= n; ++j) {
+			for (int i = 1; i < n; ++i)
+				for (int j = 1; j < n; ++j)
+					minc = min(minc, d[i][j] + map[i][k] + map[k][j]);
+            for (int i = 1; i <= n; ++i) 
+                for (int j = 1; j <= n; ++j) 
                     d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
-                }
-            }
         }
     }
 }
