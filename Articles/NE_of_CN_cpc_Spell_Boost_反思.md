@@ -9,13 +9,13 @@
 
 ### Problem
 
- Shadowverse is a funny game. Oneday you are playing a round of this game.
- You have n cards, each with two attributes $w_i$ and $x_i$. If you use card i, you will cost $w_i$ points of power and cause $x_i$ damage to the enemy.
- Among them, there are two special types of cards: some cards are magic cards and some have "spell boost effect". Everytime you have used a magic card, for each unused "spell boost effect" card i: if the current cost of i (i.e. $w_i$) is positive, then $w_i$ will be reduced by 1. Note that some cards may be both magic cards and have spell boost effect.
- Now you have W points of power, you need to calculate maximum total damage you can cause.
+ Shadowverse is a funny game. Oneday you are playing a round of this game.<br>
+ You have n cards, each with two attributes $w_i$ and $x_i$. If you use card i, you will cost $w_i$ points of power and cause $x_i$ damage to the enemy. <br>
+ Among them, there are two special types of cards: some cards are magic cards and some have "spell boost effect". Everytime you have used a magic card, for each unused "spell boost effect" card i: if the current cost of i (i.e. $w_i$) is positive, then $w_i$ will be reduced by 1. Note that some cards may be both magic cards and have spell boost effect. <br>
+ Now you have W points of power, you need to calculate maximum total damage you can cause. <br>
 
  ### Input
- input is given from Standard Input in the following format:
+ input is given from Standard Input in the following format: <br>
  n W <br>
  $w_1$ $x_1$ $is\_magic_1$ $is\_spell\_boost_1$ <br>
  $w_2$ $x_2$ $is\_magic_2$ $is\_spell\_boost_2$ <br>
