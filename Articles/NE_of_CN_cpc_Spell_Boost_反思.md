@@ -16,11 +16,11 @@
 
  ### Input
  input is given from Standard Input in the following format:
- n W
- $w_1$ $x_1$ $is\_magic_1$ $is\_spell\_boost_1$
- $w_2$ $x_2$ $is\_magic_2$ $is\_spell\_boost_2$
- ......
- $w_n$ $x_n$ $is\_magic_n$ $is\_spell\_boost_n$
+ n W <br>
+ $w_1$ $x_1$ $is\_magic_1$ $is\_spell\_boost_1$ <br>
+ $w_2$ $x_2$ $is\_magic_2$ $is\_spell\_boost_2$ <br>
+ ...... <br>
+ $w_n$ $x_n$ $is\_magic_n$ $is\_spell\_boost_n$ <br>
 
  ### Constraints
  $1 <= n <= 500$
