@@ -32,6 +32,7 @@
 ************************数论***********************
     快速幂运算 Fast_Pow
     欧拉素数筛 Celect_Prime
+	Miller-Rabin 素数测试算法
 **********************组合数学*********************
     排列组合 Combination
     Lucas定理 Lucas
@@ -753,6 +754,34 @@ class Celect_Prime {
 //简单Prime判断
 //Sietoe Prime  素数筛选法
 //Miller-Rabin 素数测试算法
+class Miller_Rabin {
+	//from Air 寒域
+    //  Miller_Rabin判断素数
+    bool Miller_Rabin(long long int n) {
+        return Miller_Rabin(n, 40);
+    }
+    //  Miller_Rabin判断素数
+    bool Miller_Rabin(long long int n, long long int S) {
+        if (n == 2)return true;
+        if (n < 2 || !(n & 1))return false;
+        int t = 0;
+        long long int a, x, y, u = n - 1;
+        while ((u & 1) == 0) t++, u >>= 1;
+        for (int i = 0; i < S; i++) {
+            a = rand() % (n - 1) + 1;
+            x = modular_exp(a, u, n);
+            for (int j = 0; j < t; j++) {
+                y = modular_multi(x, x, n);
+                if (y == 1 && x != 1 && x != n - 1)
+                    return false;
+                x = y;
+            }
+            if (x != 1)
+                return false;
+        }
+        return true;
+    }
+}
 //唯一分解定理，因子分解求和
 //pollard_rho 算法  质因数分解
 //欧拉函数
