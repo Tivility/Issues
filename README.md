@@ -1,4 +1,6 @@
 # Issues
+## Now all the blogs have been migrated to [Tivility's blog](https://tivility.github.io)
+
 My issues.
 * [树链剖分树上倍增树上差分.md](https://github.com/Tivility/Issues/blob/master/Articles/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86%E6%A0%91%E4%B8%8A%E5%80%8D%E5%A2%9E%E6%A0%91%E4%B8%8A%E5%B7%AE%E5%88%86.md)
 * [南开中学爱国导向作业.md](https://github.com/Tivility/Issues/blob/master/Articles/%E7%88%B1%E5%9B%BD%E5%BF%85%E5%85%88%E5%90%88%E7%BE%A4.md)
